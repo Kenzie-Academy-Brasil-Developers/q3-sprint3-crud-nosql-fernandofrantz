@@ -2,7 +2,8 @@ def post_route(app):
 
     @app.post("/posts")
     def create_post():
-        return ''
+        from app.controllers.post_controller import create_post
+        return create_post()
 
     @app.delete("/posts/<int:id>")
     def delete_post():
