@@ -6,17 +6,21 @@ def post_route(app):
         return create_post()
 
     @app.delete("/posts/<int:id>")
-    def delete_post():
-        return ''
+    def delete_post(id):
+        from app.controllers.post_controller import delete_post
+        return delete_post(id)
 
     @app.get("/posts/<int:id>")
-    def read_post_by_id():
-        return ''
+    def read_post_by_id(id):
+        from app.controllers.post_controller import get_post_by_id
+        return get_post_by_id(id)
 
     @app.get("/posts")
     def read_posts():
-        return ''
+        from app.controllers.post_controller import get_posts
+        return get_posts()
 
     @app.patch("/posts/<int:id>")
-    def update_post():
-        return ''
+    def update_post(id):
+        from app.controllers.post_controller import update_post
+        return update_post(id)
