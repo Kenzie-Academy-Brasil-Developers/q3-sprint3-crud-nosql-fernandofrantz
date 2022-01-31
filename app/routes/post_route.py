@@ -24,3 +24,8 @@ def post_route(app):
     def update_post(id):
         from app.controllers.post_controller import update_post
         return update_post(id)
+
+    @app.patch("/posts/<int:id>")
+    def delete_post(id):
+        from app.controllers.post_controller import delete_post
+        return delete_post(id)

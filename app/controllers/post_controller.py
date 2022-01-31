@@ -1,5 +1,3 @@
-from http.client import OK
-from itsdangerous import json
 from app.models.post_model import Post
 from flask import jsonify, request
 from http import HTTPStatus
@@ -12,7 +10,7 @@ def create_post():
     id = (len(list(db.posts.find()))) +1
     title = post.get('title')
     author = post.get('author')
-    tag = post.get('tag')
+    tag = post.get('tags')
     content = post.get('content')
 
     if (
@@ -45,6 +43,20 @@ def update_post(id):
     posts_list = list(db.posts.find())
     post_to_edit = ''
     changes = request.get_json()
+    post = request.get_json()
+
+    title = post.get('title')
+    author = post.get('author')
+    tag = post.get('tags')
+    content = post.get('content')
+
+    if (
+    title == None or
+    author == None or
+    tag == None or
+    content == None
+    ):
+        return {'Message': 'Wrong keys'}
 
     for post in posts_list:
         if(post['id'] == id):
@@ -75,3 +87,8 @@ def update_post(id):
 
             return {'msg': f'Post with id: {id} edited'}, HTTPStatus.OK
     return {'message': "post with this id doesn't exist"}, HTTPStatus.NOT_FOUND
+
+
+def delete_post(id):
+    db.posts.delete_one({'id': id})
+    return '', HTTPStatus.OK
